@@ -12,6 +12,7 @@
     name: 'src-components-inicio',
     props: [],
     mounted () {
+      this.goLogin();
 
     },
     data () {
@@ -20,6 +21,12 @@
       }
     },
     methods: {
+
+        goLogin(){
+        this.$router.push("/login");
+
+        }
+
 
     },
     computed: {

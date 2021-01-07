@@ -3,12 +3,25 @@
     <div class="jumbotron">
       <div class="container mainDiv" align="center">
         <h2>Bienvenido!</h2>
-        <p>Ingresá con tu cuenta para empezar a cargar Operaciones.</p>
+        <p>Ingresá los datos para generar un usuario nuevo.</p>
         <div class="col-md-8">
-          <div v-if="errorLogueo" class="alert alert-warning">
-            Usuario Incorrecto, intente nuevamente
+          <div v-if="sePudoCrear" class="alert alert-warning">
+            Usuario creado correctamente, ingrese a Login
           </div>
           <form novalidate autocomplete="off" @submit.prevent="enviar()">
+                <!-- ------------ -->
+            <!--  CAMPO USERNAME  -->
+            <div class="form-group mt-5">
+              <label for="username"><b>Nombre de usuario</b></label>
+              <input id="username" v-model="v.f.username.$model" type="username" class="form-control" placeholder="Ingrese userName..." />
+              <!-- CARTELES DE VALIDACIÓN -->
+              <div v-if="v.f.username.$error && v.f.username.$dirty" class="alert alert-danger mt-1">
+                <div v-if="v.f.username.required.$invalid">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
             <!-- ------------- -->
             <!--  CAMPO EMAIL  -->
             <!-- ------------- -->
@@ -27,7 +40,6 @@
             </div>
             <!-- ------------ -->
             <!--  CAMPO DESCRIPCION  -->
-            <!-- ------------v-model.number="v.f.password.$model" -->
             <div class="form-group mt-5">
               <label for="contrasena"><b>Contraseña</b></label>
               <input id="contrasena" v-model="v.f.contrasena.$model" type="password" class="form-control" placeholder="Ingrese password..." />
@@ -41,19 +53,12 @@
             <!-- BOTÓN ENVÍO  -->
             <div class="form-group my-3">
               <button type="submit" :disabled="v.$invalid" class="btn btn-success mt-4" value="Enviar">
-                Ingresar
+                Crear Usuario Nuevo
               </button>
               <br />
                 <br />
             </div>
     
-              <!-- BOTÓN REGISTRAR USUARIO NUEVO  -->
-            <div class="form-group my-3">
-              <button type="button" :disabled="v.$invalid" class="btn btn-primary" @click="goCreateForm()" >
-                Registrarse 
-              </button>
-            
-            </div>
 
           </form>
         </div>
@@ -65,23 +70,21 @@
 <script>
 import { required, email } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-//import jwt from "jsonwebtoken";
 
 export default {
   name: "SrcComponentsHome",
-  props: ["onEstadologin"],
+  props: [],
 
   data() {
     return {
       f: {
-        password: "",
+        username:"",
+        contrasena: "",
         email: ""
       },
       v: null,
-      url: "http://localhost:3000/users/login",
-      errorLogueo: "",
-      isAdmin: null,
-      estalogueado: false
+      url: "http://localhost:3000/users/",
+      sePudoCrear:false,
     };
   },
 
@@ -91,6 +94,9 @@ export default {
   created() {
     const rules = {
       f: {
+        username:{
+        required,
+        },
         email: {
           required,
           email
@@ -107,24 +113,18 @@ export default {
   methods: {
     async sendDatosFormAxios(datos) {
       let datosAEnviar= {
+        "username": datos.username,
         "email": datos.email,
         "contrasena": datos.contrasena
     }
       try {
         const res = await this.axios.post(this.url, datosAEnviar, { "content-type": "application/json" });
         console.log(res.data);
-        localStorage.jwt = res.data.token;
-        console.log("jwt::", localStorage.jwt);
-        this.errorLogueo = false;
-        this.estalogueado = true;
-        this.$router.push("/DatosForm");
+        this.sePudoCrear=true;
 
       } catch (error) {
         console.log("HTTP POST ERROR", error);
-        this.errorLogueo = true;
-        this.estalogueado = false;
       }
-      this.$emit("estadologin", this.estalogueado);
     },
 
    
@@ -141,14 +141,11 @@ export default {
     },
     /* valor inicial de los campos de datos del formularioVue */
     resetForm() {
+      this.v.f.username.$model = "";
       this.v.f.contrasena.$model = "";
       this.v.f.email.$model = "";
     },
 
-    goCreateForm(){
-     this.$router.push("/newUserForm");
-      }
- 
   }
 
 };
