@@ -13,10 +13,21 @@
             <!--  CAMPO EMAIL  -->
             <!-- ------------- -->
             <div class="form-group">
-              <label for="email" class="label-form font-weight-bold">Email</label>
-              <input id="email" v-model="v.f.email.$model" type="email" class="form-control" placeholder="Ingrese su correo electrónico..." />
+              <label for="email" class="label-form font-weight-bold"
+                >Email</label
+              >
+              <input
+                id="email"
+                v-model="v.f.email.$model"
+                type="email"
+                class="form-control"
+                placeholder="Ingrese su correo electrónico..."
+              />
               <!-- CARTELES DE VALIDACIÓN -->
-              <div v-if="v.f.email.$error && v.f.email.$dirty" class="alert alert-danger mt-1">
+              <div
+                v-if="v.f.email.$error && v.f.email.$dirty"
+                class="alert alert-danger mt-1"
+              >
                 <div v-if="v.f.email.required.$invalid">
                   Este campo es requerido
                 </div>
@@ -29,9 +40,18 @@
             <!--  CAMPO DESCRIPCION  -->
             <div class="form-group mt-5">
               <label for="contrasena"><b>Contraseña</b></label>
-              <input id="contrasena" v-model="v.f.contrasena.$model" type="password" class="form-control" placeholder="Ingrese password..." />
+              <input
+                id="contrasena"
+                v-model="v.f.contrasena.$model"
+                type="password"
+                class="form-control"
+                placeholder="Ingrese password..."
+              />
               <!-- CARTELES DE VALIDACIÓN -->
-              <div v-if="v.f.contrasena.$error && v.f.contrasena.$dirty" class="alert alert-danger mt-1">
+              <div
+                v-if="v.f.contrasena.$error && v.f.contrasena.$dirty"
+                class="alert alert-danger mt-1"
+              >
                 <div v-if="v.f.contrasena.required.$invalid">
                   Este campo es requerido
                 </div>
@@ -39,21 +59,29 @@
             </div>
             <!-- BOTÓN ENVÍO  -->
             <div class="form-group my-3">
-              <button type="submit" :disabled="v.$invalid" class="btn btn-success mt-4" value="Enviar">
+              <button
+                type="submit"
+                :disabled="v.$invalid"
+                class="btn btn-success mt-4"
+                value="Enviar"
+              >
                 Ingresar
               </button>
               <br />
-                <br />
-            </div>
-    
-              <!-- BOTÓN REGISTRAR USUARIO NUEVO  -->
-            <div class="form-group my-3">
-              <button type="button" :disabled="v.$invalid" class="btn btn-primary" @click="goCreateForm()" >
-                Registrarse 
-              </button>
-            
+              <br />
             </div>
 
+            <!-- BOTÓN REGISTRAR USUARIO NUEVO  -->
+            <div class="form-group my-3">
+              <button
+                type="button"
+                :disabled="v.$invalid"
+                class="btn btn-primary"
+                @click="goCreateForm()"
+              >
+                Registrarse
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -74,13 +102,13 @@ export default {
     return {
       f: {
         email: "",
-        contrasena:""
+        contrasena: "",
       },
       v: null,
       url: "http://localhost:3000/users/login",
       errorLogueo: "",
       isAdmin: null,
-      estalogueado: false
+      estalogueado: false,
     };
   },
 
@@ -92,12 +120,12 @@ export default {
       f: {
         email: {
           required,
-          email
+          email,
         },
         contrasena: {
-          required
-        }
-      }
+          required,
+        },
+      },
     };
 
     const { f } = this;
@@ -105,20 +133,21 @@ export default {
   },
   methods: {
     async sendDatosFormAxios(datos) {
-      let datosAEnviar= {
-        "email": datos.email,
-        "contrasena": datos.contrasena
-    }
+      let datosAEnviar = {
+        email: datos.email,
+        contrasena: datos.contrasena,
+      };
       try {
-        const res = await this.axios.post(this.url, datosAEnviar, { "content-type": "application/json" });
+        const res = await this.axios.post(this.url, datosAEnviar, {
+          "content-type": "application/json",
+        });
         console.log(res.data);
         localStorage.jwt = res.data.token;
         console.log("jwt::", localStorage.jwt);
         this.errorLogueo = false;
-        this.$store.dispatch('chequearLogin', true);
+        this.$store.dispatch("chequearLogin", true);
         this.estalogueado = true;
         this.$router.push("/DatosForm");
-
       } catch (error) {
         console.log("HTTP POST ERROR", error);
         this.errorLogueo = true;
@@ -127,7 +156,6 @@ export default {
       this.$emit("estadologin", this.estalogueado);
     },
 
-   
     async enviar() {
       this.v.$touch();
       if (!this.v.$invalid) {
@@ -136,7 +164,6 @@ export default {
         await this.sendDatosFormAxios(form);
         this.resetForm();
         this.v.$reset();
-       
       }
     },
     /* valor inicial de los campos de datos del formularioVue */
@@ -145,12 +172,10 @@ export default {
       this.v.f.email.$model = "";
     },
 
-    goCreateForm(){
-     this.$router.push("/newUserForm");
-      }
- 
-  }
-
+    goCreateForm() {
+      this.$router.push("/newUserForm");
+    },
+  },
 };
 </script>
 

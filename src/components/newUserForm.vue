@@ -9,13 +9,22 @@
             Usuario creado correctamente, ingrese a Login
           </div>
           <form novalidate autocomplete="off" @submit.prevent="enviar()">
-                <!-- ------------ -->
+            <!-- ------------ -->
             <!--  CAMPO USERNAME  -->
             <div class="form-group mt-5">
               <label for="username"><b>Nombre de usuario</b></label>
-              <input id="username" v-model="v.f.username.$model" type="username" class="form-control" placeholder="Ingrese userName..." />
+              <input
+                id="username"
+                v-model="v.f.username.$model"
+                type="username"
+                class="form-control"
+                placeholder="Ingrese userName..."
+              />
               <!-- CARTELES DE VALIDACIÓN -->
-              <div v-if="v.f.username.$error && v.f.username.$dirty" class="alert alert-danger mt-1">
+              <div
+                v-if="v.f.username.$error && v.f.username.$dirty"
+                class="alert alert-danger mt-1"
+              >
                 <div v-if="v.f.username.required.$invalid">
                   Este campo es requerido
                 </div>
@@ -26,10 +35,21 @@
             <!--  CAMPO EMAIL  -->
             <!-- ------------- -->
             <div class="form-group">
-              <label for="email" class="label-form font-weight-bold">Email</label>
-              <input id="email" v-model="v.f.email.$model" type="email" class="form-control" placeholder="Ingrese su correo electrónico..." />
+              <label for="email" class="label-form font-weight-bold"
+                >Email</label
+              >
+              <input
+                id="email"
+                v-model="v.f.email.$model"
+                type="email"
+                class="form-control"
+                placeholder="Ingrese su correo electrónico..."
+              />
               <!-- CARTELES DE VALIDACIÓN -->
-              <div v-if="v.f.email.$error && v.f.email.$dirty" class="alert alert-danger mt-1">
+              <div
+                v-if="v.f.email.$error && v.f.email.$dirty"
+                class="alert alert-danger mt-1"
+              >
                 <div v-if="v.f.email.required.$invalid">
                   Este campo es requerido
                 </div>
@@ -42,9 +62,18 @@
             <!--  CAMPO DESCRIPCION  -->
             <div class="form-group mt-5">
               <label for="contrasena"><b>Contraseña</b></label>
-              <input id="contrasena" v-model="v.f.contrasena.$model" type="password" class="form-control" placeholder="Ingrese password..." />
+              <input
+                id="contrasena"
+                v-model="v.f.contrasena.$model"
+                type="password"
+                class="form-control"
+                placeholder="Ingrese password..."
+              />
               <!-- CARTELES DE VALIDACIÓN -->
-              <div v-if="v.f.contrasena.$error && v.f.contrasena.$dirty" class="alert alert-danger mt-1">
+              <div
+                v-if="v.f.contrasena.$error && v.f.contrasena.$dirty"
+                class="alert alert-danger mt-1"
+              >
                 <div v-if="v.f.contrasena.required.$invalid">
                   Este campo es requerido
                 </div>
@@ -52,14 +81,17 @@
             </div>
             <!-- BOTÓN ENVÍO  -->
             <div class="form-group my-3">
-              <button type="submit" :disabled="v.$invalid" class="btn btn-success mt-4" value="Enviar">
+              <button
+                type="submit"
+                :disabled="v.$invalid"
+                class="btn btn-success mt-4"
+                value="Enviar"
+              >
                 Crear Usuario Nuevo
               </button>
               <br />
-                <br />
+              <br />
             </div>
-    
-
           </form>
         </div>
       </div>
@@ -78,13 +110,13 @@ export default {
   data() {
     return {
       f: {
-        username:"",
+        username: "",
         contrasena: "",
-        email: ""
+        email: "",
       },
       v: null,
       url: "http://localhost:3000/users/",
-      sePudoCrear:false,
+      sePudoCrear: false,
     };
   },
 
@@ -94,17 +126,17 @@ export default {
   created() {
     const rules = {
       f: {
-        username:{
-        required,
+        username: {
+          required,
         },
         email: {
           required,
-          email
+          email,
         },
         contrasena: {
-          required
-        }
-      }
+          required,
+        },
+      },
     };
 
     const { f } = this;
@@ -112,21 +144,22 @@ export default {
   },
   methods: {
     async sendDatosFormAxios(datos) {
-      let datosAEnviar= {
-        "username": datos.username,
-        "email": datos.email,
-        "contrasena": datos.contrasena
-    }
+      let datosAEnviar = {
+        username: datos.username,
+        email: datos.email,
+        contrasena: datos.contrasena,
+      };
       try {
-        const res = await this.axios.post(this.url, datosAEnviar, { "content-type": "application/json" });
+        const res = await this.axios.post(this.url, datosAEnviar, {
+          "content-type": "application/json",
+        });
         console.log(res.data);
-        this.sePudoCrear=true;
-
+        this.sePudoCrear = true;
       } catch (error) {
         console.log("HTTP POST ERROR", error);
       }
     },
-   
+
     async enviar() {
       this.v.$touch();
       if (!this.v.$invalid) {
@@ -135,7 +168,6 @@ export default {
         await this.sendDatosFormAxios(form);
         this.resetForm();
         this.v.$reset();
-       
       }
     },
     /* valor inicial de los campos de datos del formularioVue */
@@ -144,9 +176,7 @@ export default {
       this.v.f.contrasena.$model = "";
       this.v.f.email.$model = "";
     },
-
-  }
-
+  },
 };
 </script>
 

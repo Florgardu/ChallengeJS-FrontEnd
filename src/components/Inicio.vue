@@ -1,44 +1,29 @@
 <template>
-
   <section class="src-components-inicio">
     <h1>Bienvenidos</h1>
   </section>
-
 </template>
 
-<script >
-
-  export default  {
-    name: 'src-components-inicio',
-    props: [],
-    mounted () {
-      this.goLogin();
-
+<script>
+export default {
+  name: "src-components-inicio",
+  props: [],
+  mounted() {
+    this.goLogin();
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    goLogin() {
+      this.$router.push("/login");
     },
-    data () {
-      return {
-
-      }
-    },
-    methods: {
-
-        goLogin(){
-        this.$router.push("/login");
-
-        }
-
-
-    },
-    computed: {
-
-    }
-}
-
-
+  },
+  computed: {},
+};
 </script>
 
 <style scoped lang="css">
-  .src-components-inicio {
-
-  }
+.src-components-inicio {
+}
 </style>
