@@ -77,6 +77,8 @@
 </template>
 
 <script>
+import jwt from "jsonwebtoken";
+
 import {
   required,
   minLength, 
@@ -142,11 +144,24 @@ export default {
             Authorization: `Bearer ${localStorage.jwt}`
           }
         };
+      const tokenDecoded = jwt.decode(localStorage.jwt);
+      const userId = tokenDecoded.id;
+
+        const datosEnviar = {
+        "concepto": datos.concepto,
+        "monto": datos.monto,
+        "fecha": datos.fecha,
+        "tipo": datos.tipo,
+        "idUser": userId
+      };
+
       try {
-        let response = await this.axios.post(this.url, datos, config )
-        console.log(response.data)
+        let response = await this.axios.post(this.url, datosEnviar, config )
+        console.log(response.data);
+        console.log(userId);
       } catch (error) {
           console.log('HTTP POST ERROR', error)
+
       }
     },
     // SUBMIT DEL FORMULARIO
