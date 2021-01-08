@@ -1,143 +1,129 @@
 <template>
-
-    <section class="src-components-formulario">
-        <div class="jumbotron">
-            <h2> Formulario de registro de Operaciones</h2>
-            <hr>
-
-            <!-- formulario con el evento submit(apretar botón) llama a metodo enviar  -->
-            <form novalidate autocomplete="off" @submit.prevent="enviar()">
-
-
-                <!-- ingreso de dato concepto  -->
-                <div class="form-group">
-                    <label for="nombre"> Concepto </label>
-                    <input type="text" id="concepto" class="form-control" v-model="$v.f.concepto.$model">
+  <section class="src-components-home px-5 m-5">
+    <div class="jumbotron">
+      <div class="container mainDiv" align="center">
+        <h2>Formulario de registro de Operaciones</h2>
+        <div class="col-md-8">
+          <form novalidate autocomplete="off" @submit.prevent="enviar()">
+                <!-- ------------ -->
+            <!--  CAMPO CONCEPTO -->
+            <div class="form-group mt-5">
+              <label for="concepto"><b>Concepto</b></label>
+              <input id="concepto" v-model="v.f.concepto.$model" type="text" class="form-control" placeholder="Ingrese concepto..." />
+              <!-- CARTELES DE VALIDACIÓN -->
+              <div v-if="v.f.concepto.$error && v.f.concepto.$dirty" class="alert alert-danger mt-1">
+                <div v-if="v.f.concepto.required.$invalid">
+                  Este campo es requerido
                 </div>
+              </div>
+            </div>
 
-                <!-- cartel de validación concepto -->
-                <div v-if="$v.f.concepto.$error && $v.f.concepto.$dirty" class="alert alert-danger mt-1">
-                    <div v-if="$v.f.concepto.required.$invalid">Este campo es requerido</div>
-                    <div v-else-if="$v.f.concepto.minLength.$invalid">Este campo debe tener al menos {{$v.f.concepto.minLength.$params.length}} caracteres</div>
-                    <div v-else-if="$v.f.concepto.maxLength.$invalid">Este campo debe tener máximo {{$v.f.concepto.maxLength.$params.max}} caracteres</div>
+            <!-- ------------- -->
+            <!--  CAMPO MONTO  -->
+            <!-- ------------- -->
+            <div class="form-group">
+              <label for="monto" class="label-form font-weight-bold">Monto</label>
+              <input id="monto" v-model="v.f.monto.$model" type="number" class="form-control" placeholder="Ingrese monto..." />
+              <!-- CARTELES DE VALIDACIÓN -->
+              <div v-if="v.f.monto.$error && v.f.monto.$dirty" class="alert alert-danger mt-1">
+                <div v-if="v.f.monto.required.$invalid">
+                  Este campo es requerido
                 </div>
-
-          <!--  Ingreso IMPORTE-->
-          <!-- ------------ -->
-          <div class="form-group">
-                <label for="monto">Monto</label>
-                <input 
-                    type="number"
-                    id="monto"
-                    class="form-control"
-                    v-model.number="$v.f.monto.$model"
-                >
-                <!-- CARTELES DE VALIDACIÓN de importe -->
-                <div v-if="$v.f.monto.$error && $v.f.monto.$dirty" class="alert alert-danger mt-1">
-                    <div v-if="$v.f.monto.required.$invalid">Este campo es requerido</div>
+              </div>
+            </div>
+            <!-- ------------ -->
+            <!--  CAMPO FECHA  -->
+            <div class="form-group mt-5">
+              <label for="fecha"><b>Fecha</b></label>
+              <input id="fecha" v-model="v.f.fecha.$model" type="date" class="form-control" placeholder="Ingrese fecha..." />
+              <!-- CARTELES DE VALIDACIÓN -->
+              <div v-if="v.f.fecha.$error && v.f.fecha.$dirty" class="alert alert-danger mt-1">
+                <div v-if="v.f.fecha.required.$invalid">
+                  Este campo es requerido
                 </div>
-          </div>
+              </div>
+            </div>
 
-            <!-- Ingreso de fecha-->
-                <div class="form-group">
-                    <label for="fecha"> Ingrese fecha con formato 'xxxx-xx-xx' </label>
-                    <input type="text" id="fecha" class="form-control" v-model="$v.f.fecha.$model">
+              <!-- ------------- -->
+            <!--  CAMPO TIPO  -->
+            <!-- ------------- -->
+            <div class="form-group">
+              <label for="tipo" class="label-form font-weight-bold">Monto</label>
+              <input id="tipo" v-model="v.f.tipo.$model" type="text" class="form-control" placeholder="Ingrese tipo EGRESO/INGRESO..." />
+              <!-- CARTELES DE VALIDACIÓN -->
+              <div v-if="v.f.tipo.$error && v.f.monto.$dirty" class="alert alert-danger mt-1">
+                <div v-if="v.f.tipo.required.$invalid">
+                  Este campo es requerido
                 </div>
+              </div>
+            </div>
 
-                <!-- cartel de validación fecha -->
+            <!-- BOTÓN ENVÍO  -->
+            <div class="form-group my-3">
+              <button type="submit" :disabled="v.$invalid" class="btn btn-success mt-4" value="Enviar">
+                Enviar
+              </button>
+              <br />
+                <br />
+            </div>
+    
 
-                <div v-if="$v.f.fecha.$error && $v.f.fecha.$dirty" class="alert alert-danger mt-1">
-                  <div v-if="$v.f.fecha.required.$invalid">Este campo es requerido</div>
-                 
-                </div>
-
-
-                <!-- Ingreso de TIPO-->
-                <div class="form-group">
-                    <label for="tipo"> Ingrese TIPO de Operación (INGRESO O EGRESO) </label>
-                    <input type="text" id="tipo" class="form-control" v-model="$v.f.tipo.$model">
-                </div>
-                <!-- cartel de validación TIPO -->
-
-                <div v-if="$v.f.tipo.$error && $v.f.tipo.$dirty" class="alert alert-danger mt-1">
-                    <div v-if="$v.f.tipo.required.$invalid">Este campo es requerido</div>
-                    <div v-if="$v.f.tipo.ingresoValido.$invalid">Debe ingresar Ingreso o Egreso</div>
-
-                </div>
-
-                <!-- Botón de envio -->
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success mt-4" value="Enviar" :disabled="$v.$invalid">
-                </div>
-            </form>
+          </form>
         </div>
-        {{$v.f.fecha.$model}}
-
-    </section>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
+import { required } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
 import jwt from "jsonwebtoken";
 
-import {
-  required,
-  minLength, 
-  maxLength,
- 
-} from '@vuelidate/validators'
-
-// FUNCION VALIDADORA PARA TIPO
-  function validarTipo(value) {
-    let esValido=false;
-    if (value=='INGRESO' || value=='EGRESO' ) {
-      esValido=true;
-    }
-    return esValido;
-  }
-
-
 export default {
-  name: 'src-components-formulario',
+  name: "SrcComponentsHome",
   props: [],
-  mounted() {
-  },
-   components: {
-  },
+
   data() {
     return {
       f: {
-        concepto: '',
-        monto: '',
-        fecha: '',
-        tipo:''
+        concepto:"",
+        monto: "",
+        fecha: "",
+        tipo: ""
       },
-      url: 'http://localhost:3000/operaciones'
-    }
+      v: null,
+      url: "http://localhost:3000/operaciones",
+    };
   },
-  // acá valido los campos de f (formulario)
-  validations: {
-    f: {
-  concepto: {
-        required,
-        minLength: minLength(5),
-        maxLength: maxLength(15)
-      },
-       monto: {
-        required,
-      },
-        fecha: {
-        required,
-      },
-     tipo: {
-        required,
-        ingresoValido: validarTipo,
 
-      },
-    }
+  computed: {},
+  mounted() {},
+
+  created() {
+    const rules = {
+      f: {
+        concepto:{
+        required,
+        },
+        monto: {
+          required,
+        },
+        fecha: {
+          required
+        },
+         tipo: {
+         required
+
+        }
+      }
+    };
+
+    const { f } = this;
+    this.v = useVuelidate(rules, { f });
   },
   methods: {
-    //Envio los datos del formulario al backend con AXIOS- POST
-    async sendDatosForm(datos) {
+    async sendDatosFormAxios(datos) {
        const config = {
           headers: {
             "content-type": "application/json",
@@ -147,77 +133,66 @@ export default {
       const tokenDecoded = jwt.decode(localStorage.jwt);
       const userId = tokenDecoded.id;
 
-        const datosEnviar = {
+      let datosAEnviar= {
         "concepto": datos.concepto,
         "monto": datos.monto,
         "fecha": datos.fecha,
         "tipo": datos.tipo,
         "idUser": userId
-      };
-
-      try {
-        let response = await this.axios.post(this.url, datosEnviar, config )
-        console.log(response.data);
-        console.log(userId);
-      } catch (error) {
-          console.log('HTTP POST ERROR', error)
-
-      }
-    },
-    // SUBMIT DEL FORMULARIO
-    async enviar() {
-        this.$v.$touch();
-        if(!this.$v.$invalid) {
-          let form = this.f;
-          try{
-            await this.sendDatosForm(form);
-            this.f = this.resetCasillas();
-            this.$v.$reset();            
-          }catch(err){
-            console.err(err);
-          }
-        } else {
-          this.f = this.resetCasillas()
-          this.$v.$reset()
-        }
-    },
-    // REINICIO DE LOS DATOS- PONE EN BLANCO LAS CASILLAS COMPLETADAS 
-    resetCasillas() {
-      return {
-        concepto: '',
-        monto: '',
-        fecha:'',
-        tipo:''
-      }
     }
-  },
-  computed: { 
+      try {
+        const res = await this.axios.post(this.url, datosAEnviar,config);
+        console.log(res.data);
+
+      } catch (error) {
+        console.log("HTTP POST ERROR", error);
+      }
+    },
+   
+    async enviar() {
+      this.v.$touch();
+      if (!this.v.$invalid) {
+        const form = this.f;
+        console.log(form);
+        await this.sendDatosFormAxios(form);
+        this.resetForm();
+        this.v.$reset();
+       
+      }
+    },
+    /* valor inicial de los campos de datos del formularioVue */
+    resetForm() {
+      this.v.f.concepto.$model = "";
+      this.v.f.monto.$model = "";
+      this.v.f.fecha.$model = "";
+      this.v.f.tipo.$model = "";
+    },
+
   }
-}
+
+};
 </script>
 
 <style scoped lang="css">
-  .jumbotron {
-    background-color: rgb(25, 184, 144);
-    color: white;
-  }
-  hr {
-    background-color: #ddd;
-  }
-  .btn {
-    border: none;
-    background-color: white;
-    font-family: "Montserrat", "Avenir";
-    text-transform: uppercase;
-    height: 100%;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: steelblue;
-    transition: all 0.3s;
-    outline: none;
-  }
-  .btn:hover {
-    color: white;
-    background-color: rgb(216, 95, 15);
-  }
+.src-components-home {
+}
+
+button {
+  position: absolute;
+  right: 17px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.jumbotron {
+  text-align: center;
+  border: 1px solid #213141;
+  background-color: #cdcfd1;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+form {
+  text-align: left;
+}
 </style>

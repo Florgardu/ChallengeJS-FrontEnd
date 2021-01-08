@@ -45,7 +45,7 @@
             <!-- ------------ -->
             <div class="form-group">
               <label for="fecha" class="font-weight-bold">Fecha</label>
-              <input id="fecha" v-model="v.f.fecha.$model" type="text" class="form-control" placeholder="Ingrese fecha.." />
+              <input id="fecha" v-model="v.f.fecha.$model" type="date" class="form-control" placeholder="Ingrese fecha.." />
               <!-- CARTELES DE VALIDACIÓN -->
               <div v-if="v.f.fecha.$error && v.f.fecha.$dirty" class="alert alert-danger mt-1">
                 <div v-if="v.f.fecha.required.$invalid">

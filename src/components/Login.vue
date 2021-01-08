@@ -27,7 +27,6 @@
             </div>
             <!-- ------------ -->
             <!--  CAMPO DESCRIPCION  -->
-            <!-- ------------v-model.number="v.f.password.$model" -->
             <div class="form-group mt-5">
               <label for="contrasena"><b>Contraseña</b></label>
               <input id="contrasena" v-model="v.f.contrasena.$model" type="password" class="form-control" placeholder="Ingrese password..." />
@@ -74,8 +73,8 @@ export default {
   data() {
     return {
       f: {
-        password: "",
-        email: ""
+        email: "",
+        contrasena:""
       },
       v: null,
       url: "http://localhost:3000/users/login",
