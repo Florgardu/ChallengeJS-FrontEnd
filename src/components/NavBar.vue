@@ -47,7 +47,6 @@
     name: 'src-components-nav-bar',
     props: [],
     mounted () {
-      
     },
     data () {
       return {
@@ -56,7 +55,6 @@
       }
     },
     methods: {
-
 
       validarEstadoLogin(estado){
           this.isLogin = estado;

@@ -46,7 +46,6 @@
              <td colspan="2">${{calcularTotal}}</td>
             </tr>
 
-
           </table>
           </div>
  <h2 v-else class="alert alert-warning">No se encontraron nuevos datos cargados</h2>
@@ -58,7 +57,9 @@
 
 <script>
 
-  import Filtros from '../Filtros.js'
+  import Filtros from '../Filtros.js';
+  import jwt from "jsonwebtoken";
+
 
   export default  {
     name: 'src-components-usuarios-registrados',
@@ -135,10 +136,10 @@
 
    calcularTotalIngresos(){
       let total = 0;
-       let datos= this.$store.state.datosForm;
+       let datos= this.operacionesPorUsuario;
        for (let index = 0; index < datos.length; index++) {
          const element = datos[index];
-         if (element.tipo=="INGRESO") {
+         if (element.tipo==="INGRESO") {
             if(element.monto && !isNaN(element.monto)){
         total = total +element.monto;
        }
@@ -150,7 +151,7 @@
 
     calcularTotalEgresos(){
       let total = 0;
-       let datos= this.$store.state.datosForm;
+       let datos= this.operacionesPorUsuario;
        for (let index = 0; index < datos.length; index++) {
          const element = datos[index];
          if (element.tipo=="EGRESO") {
@@ -164,9 +165,19 @@
 
 
     operationsLimited() {
-       let datos= this.$store.state.datosForm;
+       let datos= this.operacionesPorUsuario;
         return datos.slice(0, 10);
-    }
+    },
+
+
+      operacionesPorUsuario() {
+      let operaciones = this.$store.state.datosForm;
+      const tokenDecoded = jwt.decode(localStorage.jwt);
+      const userId = tokenDecoded.id;
+      let operacionesPorUser=operaciones.filter(operacion => operacion.idUser === userId);
+      return operacionesPorUser;
+    },
+
 }
 
     }

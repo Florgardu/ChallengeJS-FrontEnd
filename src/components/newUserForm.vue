@@ -126,7 +126,6 @@ export default {
         console.log("HTTP POST ERROR", error);
       }
     },
-
    
     async enviar() {
       this.v.$touch();
