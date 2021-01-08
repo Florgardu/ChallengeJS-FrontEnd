@@ -24,15 +24,17 @@
       </router-link>
       </li>
 
-     
-
+         <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <button v-if="this.$store.state.isLogin" type="button" class="btn btn-outline-danger my-2 my-sm-0" @click="logout()">
+              Logout
+            </button>
+          </li>
+        </ul>
       
     </ul>
   </div>
 </nav>
-
-
-
 
 
   </section>
@@ -45,17 +47,33 @@
     name: 'src-components-nav-bar',
     props: [],
     mounted () {
-
+      
     },
     data () {
       return {
+        isLogin:true
 
       }
     },
     methods: {
 
+
+      validarEstadoLogin(estado){
+          this.isLogin = estado;
+      }, 
+
+      logout() {
+      localStorage.jwt = null;
+      console.log(localStorage.jwt);
+     this.$store.dispatch('chequearLogin', false);
+
+      this.$router.push("/login");
+    },
+
     },
     computed: {
+
+
 
     }
 }
@@ -67,4 +85,11 @@
   .src-components-nav-bar {
 
   }
+
+  button {
+  position: absolute;
+  right: 17px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
 </style>

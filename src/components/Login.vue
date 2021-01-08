@@ -116,6 +116,7 @@ export default {
         localStorage.jwt = res.data.token;
         console.log("jwt::", localStorage.jwt);
         this.errorLogueo = false;
+        this.$store.dispatch('chequearLogin', true);
         this.estalogueado = true;
         this.$router.push("/DatosForm");
 

@@ -8,14 +8,15 @@ export default createStore({
     state(){
         return {
     contador: 123,
-    datosForm:[]
-
+    datosForm:[],
+    isLogin:false
         }
     }, 
     actions: {
         contarUp({commit}, cantidad){
             commit('incrementar', cantidad)
         },
+          
         contarDown({commit}, cantidad){
             commit('incrementar', cantidad)
         },
@@ -35,6 +36,10 @@ export default createStore({
             }
           },
 
+          chequearLogin({commit},estado){
+            commit('cambiarEstadoLogin',estado);
+          },
+
     },
 
     mutations : {
@@ -48,7 +53,11 @@ export default createStore({
 
         guardarDatosFormMutation(state, data){
             state.datosForm=data;
+        },
+        cambiarEstadoLogin(state, estado){
+            state.isLogin=estado;
         }
+
     },
 
 });
