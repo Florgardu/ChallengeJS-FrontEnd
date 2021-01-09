@@ -78,15 +78,16 @@
             <!-- ------------- -->
             <div class="form-group">
               <label for="tipo" class="label-form font-weight-bold"
-                >Monto</label
+                >Tipo</label
               >
-              <input
+              <select
                 id="tipo"
                 v-model="v.f.tipo.$model"
-                type="text"
                 class="form-control"
-                placeholder="Ingrese tipo EGRESO/INGRESO..."
-              />
+                placeholder="Ingrese tipo EGRESO/INGRESO...">
+                  <option>EGRESO</option>
+                  <option>INGRESO</option>
+              </select>
               <!-- CARTELES DE VALIDACIÓN -->
               <div
                 v-if="v.f.tipo.$error && v.f.monto.$dirty"

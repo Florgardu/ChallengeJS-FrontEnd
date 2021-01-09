@@ -166,7 +166,18 @@ export default {
       this.v.f._id.$model = operacionId;
       this.v.f.concepto.$model = res.data[0].concepto;
       this.v.f.monto.$model = res.data[0].monto;
-      this.v.f.fecha.$model = res.data[0].fecha;
+      let fecha = new Date(res.data[0].fecha);
+
+      let day = fecha.getDate();
+      let month = fecha.getMonth() + 1;
+      let year = fecha.getFullYear();
+
+      if (month < 10) {
+        this.v.f.fecha.$model = `${year}-0${month}-${day}`;
+      } else {
+        this.v.f.fecha.$model = `${year}-${month}-${day}`;
+      }
+
       this.isRequestLoading = false;
     },
 
