@@ -121,9 +121,9 @@ export default {
     colorCalculado() {
       let total = this.calcularTotal;
       let color = "magenta";
-      if (total > 100) {
+      if (total > 0) {
         color = "green";
-      } else if (total < 100) {
+      } else if (total < 0) {
         color = "red";
       }
       return color;

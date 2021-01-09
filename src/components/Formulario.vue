@@ -198,6 +198,9 @@ export default {
         await this.sendDatosFormAxios(form);
         this.resetForm();
         this.v.$reset();
+         setTimeout(() => {
+          this.$router.push("/DatosForm");
+        }, 2000);
       }
     },
     /* valor inicial de los campos de datos del formularioVue */
